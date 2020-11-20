@@ -55,7 +55,7 @@ def create_new_post():
     print(msg.user.name)
     db.session.add(msg)
     db.session.commit()
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main.post",message_id=msg.id))
 
 @bp.route("/profile/<int:user_id>")
 @flask_login.login_required
