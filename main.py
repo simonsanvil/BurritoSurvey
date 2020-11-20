@@ -8,7 +8,7 @@ import flask_login
 
 #from . import model, db
 
- import model, db
+import model, db
 
 from datetime import datetime as dt
 
