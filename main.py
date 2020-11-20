@@ -63,3 +63,6 @@ def profile(user_id):
     user = model.User.query.filter_by(id=user_id).first_or_404()
     user_messages = model.Message.query.filter_by(user=user).order_by(model.Message.timestamp.desc()).all()
     return render_template("main/profile.html", user=user,posts=user_messages)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
