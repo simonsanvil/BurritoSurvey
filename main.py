@@ -6,7 +6,9 @@ from flask_login  import current_user
 
 import flask_login
 
-from . import model, db
+#from . import model, db
+
+ import model, db
 
 from datetime import datetime as dt
 
