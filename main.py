@@ -1,4 +1,4 @@
-import datetime
+import datetime, os
 import dateutil.tz
 
 from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
@@ -65,4 +65,5 @@ def profile(user_id):
     return render_template("main/profile.html", user=user,posts=user_messages)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    os.system("export FLASK_APP=WebApp")
+    os,system("flask run --host 0.0.0.0")
