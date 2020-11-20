@@ -1,4 +1,5 @@
-from . import db
+#from . import db
+import db
 import flask_login
 from flask_login  import current_user
 
