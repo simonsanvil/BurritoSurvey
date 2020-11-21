@@ -85,6 +85,10 @@ footer .container {
 	background-color: rgba(255,255,255,0.5) !important;
 }
 
+.navigation-bar a, .page-footer p{
+	color:#006400 !important;
+}
+
 .new_post_container{
 	position: fixed;
 	width: 100%;

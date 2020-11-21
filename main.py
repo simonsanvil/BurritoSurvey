@@ -3,15 +3,15 @@ import dateutil.tz
 
 from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
 from flask_login  import current_user
-
 import flask_login
-
-from . import model, db
+from . import model
+from .app import db
 
 from datetime import datetime as dt
 
-app = Flask(__name__)
 bp = Blueprint("main", __name__)
+
+
 
 @bp.route("/")
 @flask_login.login_required
@@ -65,5 +65,6 @@ def profile(user_id):
     return render_template("main/profile.html", user=user,posts=user_messages,responses=None)
 
 if __name__ == "__main__":
-    os.system("export FLASK_APP=WebApp")
-    os.system("flask run --host 0.0.0.0")
+    from . import create_app
+    app = create_app()
+    app.run()

@@ -2,7 +2,7 @@
 <html>
 		<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-				<title>Microblogging app</title>
+				<title>Burrito Forms</title>
 				<link rel="icon" href="{{ url_for('static', filename='burrito.svg') }}">
 			<!--  IMPORT materializeCSS --> <!-- Compiled and minified CSS -->
 			<link rel="stylesheet" href="{{ url_for('static', filename='microblogg.css') }}">
@@ -13,9 +13,13 @@
 				<header>
 					<div class="navigation-bar">
 						<nav class="nav-extended">
-							<div class="nav-wrapper blue darken-4">
-								<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-								<a class="brand-logo" href="/" style="margin-left:15px;">Home</a>
+							<div class="nav-wrapper yellow darken-3">
+								<a href="#" data-target="mobile-demo" class="sidenav-trigger">
+									<i class="material-icons">menu</i>
+								</a>
+								<a class="brand-logo" href="/" style="margin-left:15px;">
+									Home
+								</a>
 								<ul id="nav-mobile" class="right hide-on-med-and-down">
 									<li class="dropdown">
 										{% if current_user.is_authenticated: %}
@@ -24,7 +28,7 @@
 													{{current_user.name}}
 													<b class="caret"></b>
 												</a>
-												<ul id="user-dropdown" class="dropdown-menu blue darken-3 ">
+												<ul id="user-dropdown" class="dropdown-menu yellow darken-2">
 													<li>
 														<a href="/logout">Sign Out<i class="right material-icons" alt="logout">logout</i></a>
 
@@ -51,11 +55,11 @@
 					</section>
 				</main>
 
-				<footer class="page-footer blue darken-4" style="margin-top:40px">
+				<footer class="page-footer yellow darken-3" style="margin-top:40px">
 					<div class="container">
 						<div class="row">
 							<div class="col l6 s12">
-								<p class="grey-text text-lighten-4">Made for web apps.</p>
+								<p class="text-lighten-4">Made for web apps.</p>
 							</div>
 						</div>
 					</div>
