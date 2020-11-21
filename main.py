@@ -8,8 +8,6 @@ import flask_login
 
 from . import model, db
 
-#import model, db
-
 from datetime import datetime as dt
 
 app = Flask(__name__)
@@ -63,9 +61,9 @@ def create_new_post():
 @flask_login.login_required
 def profile(user_id):
     user = model.User.query.filter_by(id=user_id).first_or_404()
-    user_messages = model.Message.query.filter_by(user=user).order_by(model.Message.timestamp.desc()).all()
-    return render_template("main/profile.html", user=user,posts=user_messages)
+    user_messages = model.Message.query.filter_by(user=user,response_to=None).order_by(model.Message.timestamp.desc()).all()
+    return render_template("main/profile.html", user=user,posts=user_messages,responses=None)
 
 if __name__ == "__main__":
     os.system("export FLASK_APP=WebApp")
-    os,system("flask run --host 0.0.0.0")
+    os.system("flask run --host 0.0.0.0")

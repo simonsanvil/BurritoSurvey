@@ -10,11 +10,15 @@
             {%if responses is not none%}
               <div class="collapsible-body">
                 <ul class="collapsible popout message">
-                  {% for response in responses %}
-                    <li class="collection-item avatar">
-                      {% include 'response_template.html' %}
-                    </li>
-                  {% endfor %}
+                  {%if responses|length>0%}
+                    {% for response in responses %}
+                      <li class="collection-item avatar">
+                        {% include 'response_template.html' %}
+                      </li>
+                    {% endfor %}
+                  {%else%}
+                      <p class="center">No responses</p>
+                  {%endif%}
                 </ul>
                 <ul
               </div>

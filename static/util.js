@@ -1,13 +1,13 @@
 var activate_msg_elem = function(text,is_response){
   // var user_name = "{{current_user.name}}";
   $('#message_header').html(text);
-  if($('#new_post:visible').length){
-    $("#new_post").hide();
+  if($('.new_post_container:visible').length){
+    $(".new_post_container").hide();
     $("#create_post_icon").html("add");
     $("#new_post_a").removeClass("yellow darken-3");
     $("#new_post_a").css({"color":"red"});
   }else{
-    $("#new_post").show();
+    $(".new_post_container").show();
     $("#create_post_icon").html("clear");
     $("#new_post_a").addClass("yellow darken-3");
   };
