@@ -4,8 +4,8 @@ import dateutil.tz
 from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
 from flask_login  import current_user
 import flask_login
-from . import model
-from .app import db
+from WebApp import model
+from WebApp.app import db
 
 from datetime import datetime as dt
 
