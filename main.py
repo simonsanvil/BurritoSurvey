@@ -17,14 +17,14 @@ bp = Blueprint("main", __name__)
 @bp.route("/")
 @flask_login.login_required
 def index():
-    new_survey =  model.Survey(
-        user=current_user,
-        title="My first Survey",
-        state = SurveyState.NEW,
-        time_created=datetime.datetime.now(tz.tzlocal())
-    )
-    db.session.add(new_survey)
-    db.session.commit()
+    # new_survey =  model.Survey(
+    #     user=current_user,
+    #     title="My first Survey",
+    #     state = SurveyState.NEW,
+    #     time_created=datetime.datetime.now(tz.tzlocal())
+    # )
+    # db.session.add(new_survey)
+    # db.session.commit()
 
     surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
     other_surveys = model.Survey.query.filter_by(user_id=2).order_by(model.Survey.time_created.desc()).limit(3).all()

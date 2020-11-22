@@ -8,8 +8,8 @@ from datetime import datetime as dt
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
+app = Flask(__name__)
 def create_app(test_config=None):
-    app = Flask(__name__)
     app.config["SECRET_KEY"] = b"\x8c\xa5\x04\xb3\x8f\xa1<\xef\x9bY\xca/*\xff\x12\xfb"
     app.config[
         "SQLALCHEMY_DATABASE_URI"
