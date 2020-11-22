@@ -51,6 +51,7 @@ def login_post():
         # The user exists and the password is correct
         print("USER EXISTS")
         flask_login.login_user(user)
+        print(current_user)
         return redirect(url_for("main.index"))
 
     else:

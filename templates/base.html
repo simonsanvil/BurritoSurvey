@@ -2,7 +2,7 @@
 <html>
 		<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-				<title>Burrito Forms</title>
+				<title>Burrito Surveys</title>
 				<link rel="icon" href="{{ url_for('static', filename='burrito.svg') }}">
 			<!--  IMPORT materializeCSS --> <!-- Compiled and minified CSS -->
 			<link rel="stylesheet" href="{{ url_for('static', filename='microblogg.css') }}">
@@ -14,7 +14,23 @@
 					<div class="navigation-bar">
 						<nav class="nav-extended">
 							<div class="nav-wrapper yellow darken-3">
-								<a href="#" data-target="mobile-demo" class="sidenav-trigger">
+								<ul id="slide-out" class="sidenav">
+									{% if current_user.is_authenticated: %}
+										<li>
+											<a class="dropdown-toggle" data-toggle="dropdown" href="{{url_for('main.profile',user_id=current_user.id)}}">
+												<i class="material-icons left">person</i>
+												{{current_user.name}}
+												<b class="caret"></b>
+											</a>
+										</li>
+										<li>
+											<a href="/logout">Sign Out<i class="right material-icons" alt="logout">logout</i></a>
+										</li>
+									{%else%}
+										<li><a href="/login"><i class="material-icons">person</i>Sign In</a></li>
+									{%endif%}
+								</ul>
+								<a href="#" data-target="slide-out" class="sidenav-trigger">
 									<i class="material-icons">menu</i>
 								</a>
 								<a class="brand-logo" href="/" style="margin-left:15px;">
@@ -31,7 +47,6 @@
 												<ul id="user-dropdown" class="dropdown-menu yellow darken-2">
 													<li>
 														<a href="/logout">Sign Out<i class="right material-icons" alt="logout">logout</i></a>
-
 													</li>
 												</ul>
 										{% else %}

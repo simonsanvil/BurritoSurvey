@@ -6,13 +6,11 @@ from flask_login  import current_user
 import enum
 
 class User(flask_login.UserMixin,db.Model):
-    __table_args__ = {'extend_existing': True}
-
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    surveys = db.relationship('Survey', backref='survey', lazy=True,cascade="all, delete-orphan",)
+    surveys = db.relationship('Survey', backref='user', lazy=True,cascade="all, delete-orphan",)
 
 class SurveyState(enum.Enum):
     NEW = 1
@@ -20,11 +18,9 @@ class SurveyState(enum.Enum):
     CLOSED = 3
 
 class Survey(db.Model):
-    __table_args__ = {'extend_existing': True}
-
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    survey_title = db.Column(db.String(64), nullable=False)
+    title = db.Column(db.String(64), nullable=False)
     questions = db.relationship(
         "Question",
         backref="survey",
@@ -44,16 +40,12 @@ class QuestionType(enum.Enum):
     POLL = 5
 
 class Question(db.Model):
-    __table_args__ = {'extend_existing': True}
-
     id = db.Column(db.Integer, primary_key=True)
     survey_id = db.Column(db.Integer, db.ForeignKey("survey.id"), nullable=False)
     position = db.Column(db.Integer, autoincrement=True)
     type = db.Column(db.Enum(QuestionType), nullable=False)
 
 class QuestionAnswer(db.Model):
-    __table_args__ = {'extend_existing': True}
-
     id = db.Column(db.Integer, primary_key=True)
     answer_number = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime(), nullable=False)

@@ -23,7 +23,7 @@ def create_app(test_config=None):
     from WebApp import model
     @login_manager.user_loader
     def load_user(user_id):
-        return #model.User.query.get(int(user_id))
+        return model.User.query.get(int(user_id))
 
     # Register blueprints:
     from  WebApp import main

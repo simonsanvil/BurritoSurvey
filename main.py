@@ -1,5 +1,5 @@
 import datetime, os
-import dateutil.tz
+from dateutil import tz
 
 from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
 from flask_login  import current_user
@@ -13,27 +13,18 @@ from datetime import datetime as dt
 bp = Blueprint("main", __name__)
 
 @bp.route("/")
-#@flask_login.login_required
+@flask_login.login_required
 def index():
-    # surveys = model.Survey.query.order_by(model.Survey.time_created.desc()).limit(10).all()
+    # new_survey =  model.Survey(
+    #     user=current_user,
+    #     title="My first Survey",
+    #     state = SurveyState.NEW,
+    #     time_created=datetime.datetime.now(tz.tzlocal())
+    # )
+    # db.session.add(new_survey)
+    # db.session.commit()
 
-    user = model.User(email="mary@example.com", name="mary")
-    surveys = [
-        model.Survey(
-            user=user,
-            survey_title="Survey Test",
-            # questions=[question1],
-            state = SurveyState.NEW,
-            time_created=datetime.datetime.now(dateutil.tz.tzlocal())
-        ),
-        model.Survey(
-            user=user,
-            survey_title="Survey Test 2",
-            # questions=[question2],
-            state = SurveyState.ONLINE,
-            time_created=datetime.datetime.now(dateutil.tz.tzlocal())
-        ),
-    ]
+    surveys = model.Survey.query.order_by(model.Survey.time_created.desc()).limit(10).all()
 
     return render_template("main/index.html", surveys=surveys)
 
@@ -75,12 +66,13 @@ def index():
 #     db.session.commit()
 #     return redirect(url_for("main.post",message_id=msg.id))
 
-@bp.route("/profile/<int:user_id>")
+#@bp.route("/profile/<int:user_id>")
 #@flask_login.login_required
+@bp.route("/profile/<int:user_id>")
 def profile(user_id):
     user = model.User.query.filter_by(id=user_id).first_or_404()
     user_surveys = model.Survey.query.filter_by(user=user).order_by(model.Survey.time_created.desc()).all()
-    return render_template("main/profile.html", user=user,surveys=user_messages)#,responses=None)
+    return render_template("main/profile.html", user=user,surveys=user_surveys)#,responses=None)
 
 if __name__ == "__main__":
     from . import create_app
