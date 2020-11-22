@@ -90,6 +90,37 @@ footer .container {
 	color:#006400 !important;
 }
 
+.survey-info{
+	margin: 7px;
+	font-size:.75em !important;
+}
+
+.survey-info i{
+	font-size: 1.4rem !important;
+}
+
+.icon-text{
+	line-height:28px;
+	margin:0 ;
+	padding: 0;
+}
+
+.survey-header i{
+	font-size: 2.1rem !important;
+}
+
+.txt-icon{
+	display: inline-flex;
+  vertical-align: top;
+	margin-left: 2px !important;
+	margin-right: 2px !important;
+	padding: 0 !important;
+}
+
+.state-info i{
+	/* color: darkgrey !important; */
+}
+
 .new_post_container{
 	position: fixed;
 	width: 100%;

@@ -3,18 +3,39 @@
     <div class = "card-content">
       <div class = "card-title">
         <div class="metadata">
-          <span class="survey-title">
-            <a href="{{url_for('main.profile',user_id=survey.user.id)}}" class="black-text">
-              <i class="material-icons prefix" style="margin:0;padding:0">poll</i>
-              <b>{{ survey.title }}</b>
+          <span class="survey-header">
+            <a class="black-text"> <!--href="{{url_for('main.profile',user_id=survey.user.id)}}" -->
+              <i class="material-icons prefix txt-icon" style="margin:0;padding:0">poll</i>
+              <b class="icon-text">{{ survey.title }}</b>
             </a>
+            <span class="creator right">
+              <p>By {{ survey.user.name }}</p>
+            </span>
           </span>
-          <span class="creator right">
-              By {{ survey.user.name }}
-          </span>
+          <div class="survey-info">
+            <div class="state-info right">
+              <p class="icon-text">
+                {%set status=(survey.state._value2member_map_[1]|string)[12:]|lower%}
+                {%if status=="new"%}
+                  <i class="material-icons prefix left txt-icon" style="color:darkgray;">fiber_manual_record</i>
+                  {%set status="unactive"%}
+                {%elif status=="closed"%}
+                  <i class="material-icons prefix left txt-icon" style="color:crimson;">fiber_manual_record</i>
+                {%elif status=="online"%}
+                  <i class="material-icons prefix left txt-icon" style="color:darkgreen;">fiber_manual_record</i>
+                {%endif%}
+                {{status}}
+              </p>
+            </div>
+            <div class="questions-info left">
+              <p class="icon-text">
+                <i class="material-icons prefix left txt-icon">question_answer</i>
+                {{survey.questions|length}} answers
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="text">STATE: {{(survey.state._value2member_map_[1]|string)[12:]}}</div>
     </div>
     <div class="card-action msg-actions" style="margin-top:15px;">
       <!-- <a class="btn red hoverable" href="#">
