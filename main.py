@@ -24,9 +24,11 @@ def index():
     # db.session.add(new_survey)
     # db.session.commit()
 
-    surveys = model.Survey.query.order_by(model.Survey.time_created.desc()).limit(10).all()
+    surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
 
     return render_template("main/index.html", surveys=surveys)
+
+# model.Survey(user=user,title="My first Survey",state = SurveyState.NEW,time_created=datetime.datetime.now(tz.tzlocal()))
 
 # @bp.route("/post/<int:message_id>")
 # @bp.route('/post/<int:message_id>/<int:is_response>')

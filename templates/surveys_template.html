@@ -4,24 +4,30 @@
 <div id = "post-results">
   <div class="messages">
     <ul id = "message-list" class="collapsible popout message">
-      {% for survey in surveys %}
-          <li class="{{is_active}}">
-            {% include 'survey_template.html' %}
-              <!-- <div class="collapsible-body">
-                <ul class="collapsible popout message">
-                  {%if responses|length>0%}
-                    {% for response in responses %}
-                      <li class="collection-item avatar">
-                        {% include 'response_template.html' %}
-                      </li>
-                    {% endfor %}
-                  {%else%}
-                      <p class="center">No responses</p>
-                  {%endif%}
-                </ul>
-              </div> -->
-          </li>
-      {% endfor %}
+      {%if surveys|length != 0%}
+        {% for survey in surveys %}
+            <li class="{{is_active}}">
+              {% include 'survey_template.html' %}
+                <!-- <div class="collapsible-body">
+                  <ul class="collapsible popout message">
+                    {%if responses|length>0%}
+                      {% for response in responses %}
+                        <li class="collection-item avatar">
+                          {% include 'response_template.html' %}
+                        </li>
+                      {% endfor %}
+                    {%else%}
+                        <p class="center">No responses</p>
+                    {%endif%}
+                  </ul>
+                </div> -->
+            </li>
+        {% endfor %}
+      {%else%}
+        <div class="center">
+          <h4>You haven't created any surveys yet.</h4>
+        </div>
+      {%endif%}
     </ul>
   </div>
 <div>
