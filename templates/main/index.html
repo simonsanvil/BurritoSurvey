@@ -5,6 +5,10 @@
     <h4 class="center">Your Surveys:</h4>
     <div class="divider"></div>
     {% include 'surveys_template.html' %}
+    <div class="divider" style="margin-top:50px"></div>
+    <h5 class="center">Other surveys you might be interested in:</h5>
+      {%set others=True%}
+      {% include 'surveys_template.html' %}
   </div>
   <div id = "create_post_btn" class="fixed-action-btn">
     <a id="new_survey_a" class="btn-floating btn-large blue darken-3 hoverable" href="javascript:void(0)">

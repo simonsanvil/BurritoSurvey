@@ -10,6 +10,8 @@ from WebApp.model import SurveyState, QuestionType
 
 from datetime import datetime as dt
 
+# from sqlalchemy import or_
+
 bp = Blueprint("main", __name__)
 
 @bp.route("/")
@@ -25,8 +27,9 @@ def index():
     # db.session.commit()
 
     surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
+    other_surveys = model.Survey.query.filter_by(user_id=2).order_by(model.Survey.time_created.desc()).limit(3).all()
 
-    return render_template("main/index.html", surveys=surveys)
+    return render_template("main/index.html",surveys=surveys,other_surveys=other_surveys)
 
 # model.Survey(user=user,title="My first Survey",state = SurveyState.NEW,time_created=datetime.datetime.now(tz.tzlocal()))
 

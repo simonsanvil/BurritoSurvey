@@ -1,6 +1,8 @@
 <!-- {% set one_post = posts|length==1%}
 {% set is_active = "active" if one_post else ""%} -->
-
+{%if others%}
+  {% set surveys=other_surveys %}
+{%endif%}
 <div id = "post-results">
   <div class="messages">
     <ul id = "message-list" class="collapsible popout message">
@@ -25,7 +27,7 @@
         {% endfor %}
       {%else%}
         <div class="center">
-          <h4>You haven't created any surveys yet.</h4>
+          <h5 style="color:grey">You haven't created any surveys yet.</h5>
         </div>
       {%endif%}
     </ul>
