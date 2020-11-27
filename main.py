@@ -4,9 +4,9 @@ from dateutil import tz
 from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
 from flask_login  import current_user
 import flask_login
-from WebApp import model
-from WebApp.app import db
-from WebApp.model import SurveyState, QuestionType
+from . import model
+from .app import db
+from .model import SurveyState, QuestionType
 
 from datetime import datetime as dt
 
@@ -74,6 +74,6 @@ def profile(user_id):
     return render_template("main/profile.html", user=user,surveys=user_surveys)#,responses=None)
 
 if __name__ == "__main__":
-    from . import create_app
+    from app import create_app
     app = create_app()
     app.run(env)
