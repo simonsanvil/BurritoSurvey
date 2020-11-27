@@ -4,9 +4,9 @@ from dateutil import tz
 from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
 from flask_login  import current_user
 import flask_login
-from WebApp import model
-from WebApp.app import db
-from WebApp.model import SurveyState, QuestionType
+from . import model
+from .app import db
+from .model import SurveyState, QuestionType
 
 from datetime import datetime as dt
 
@@ -39,31 +39,31 @@ def index():
 #
 #     return render_template("main/post.html",posts=[message],with_response=bool(is_response),responses=responses)
 
-# @bp.route("/new_post",methods=["POST"])
-# @flask_login.login_required
-# def create_new_post():
-#     post_text = request.form.get("post_text")
-#     response_to = request.form.get("response_to")
-#
-#     if response_to is not None:
-#         response_to = model.Message.query.filter_by(id=response_to).first_or_404()
-#
-#     if len(post_text)>240:
-#         flash("The text was too long!")
-#         return redirect(url_for("main.index"))
-#     print(post_text)
-#     post_timestamp = dt.now(dateutil.tz.tzlocal())
-#     user = current_user
-#     msg = model.Message(
-#         user=user,
-#         text=post_text,
-#         timestamp=post_timestamp,
-#         response_to=response_to
-#     )
-#     print(msg.user.name)
-#     db.session.add(msg)
-#     db.session.commit()
-#     return redirect(url_for("main.post",message_id=msg.id))
+@bp.route("/new_survey",methods=["POST"])
+@flask_login.login_required
+def create_new_survey():
+    # post_text = request.form.get("post_text")
+    # response_to = request.form.get("response_to")
+    #
+    # if response_to is not None:
+    #     response_to = model.Message.query.filter_by(id=response_to).first_or_404()
+    #
+    # if len(post_text)>240:
+    #     flash("The text was too long!")
+    #     return redirect(url_for("main.index"))
+    # print(post_text)
+    # post_timestamp = dt.now(dateutil.tz.tzlocal())
+    # user = current_user
+    # msg = model.Message(
+    #     user=user,
+    #     text=post_text,
+    #     timestamp=post_timestamp,
+    #     response_to=response_to
+    # )
+    # print(msg.user.name)
+    # db.session.add(msg)
+    # db.session.commit()
+    return redirect(url_for("main.index"))#redirect(url_for("main.post",message_id=msg.id))
 
 #@bp.route("/profile/<int:user_id>")
 #@flask_login.login_required
@@ -74,6 +74,6 @@ def profile(user_id):
     return render_template("main/profile.html", user=user,surveys=user_surveys)#,responses=None)
 
 if __name__ == "__main__":
-    from . import create_app
+    from app import create_app
     app = create_app()
     app.run(env)

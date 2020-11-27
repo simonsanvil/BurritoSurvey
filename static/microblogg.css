@@ -6,7 +6,6 @@ body {
 
 main {
 	flex: 1 0 auto;
-
 }
 
 footer .container {
@@ -15,18 +14,6 @@ footer .container {
 
 .main_block {
 	margin-left: 2.5%;
-}
-
-.header-rtext{
-	margin-right: 15px;
-}
-
-.action-btn-header{
-	position:relative;
-	margin-top:5px;
-}
-
-.header-rbutton{
 }
 
 .user-dropdown{
@@ -56,23 +43,24 @@ footer .container {
 	font-size: 20px !important;
 }
 
-.messages{
+.surveys-list-main{
 	max-width:650px;
 	margin:auto;
 	padding:15px;
 }
 
-.message{
+.survey-content{
 	width:100%;
 	height:100%;
 	margin:0;
 	padding:0;
 }
-.msg-actions{
-	padding: 0 !important;
+
+.survey-card-actions{
+	/* padding: 0 !important; */
 }
 
-.msg-actions i{
+.survey-card-actions i{
 	margin: auto !important;
 	width: 12%;
 }
@@ -82,7 +70,7 @@ footer .container {
 	padding:0 !important;
 }
 
-#main_posts_view{
+#main_surveys_view{
 	background-color: rgba(255,255,255,0.5) !important;
 }
 
@@ -113,7 +101,7 @@ footer .container {
 	display: inline-flex;
   vertical-align: top;
 	margin-left: 2px !important;
-	margin-right: 2px !important;
+	margin-right: 5px !important;
 	padding: 0 !important;
 }
 
@@ -121,31 +109,35 @@ footer .container {
 	/* color: darkgrey !important; */
 }
 
-.new_post_container{
+.create_survey-btn{
+	z-index:100;
+}
+
+.new_survey_container{
+	/* blurry background effect*/
 	position: fixed;
+	display:none;
 	width: 100%;
 	height: 100%;
 	top:0; bottom: 0;
 	left:0; right: 0;
-	display:none;
 	background-color: rgba(255,255,255,0.6) !important;
+	z-index: 100;
 }
 
-#new_post{
-	/* display:none; */
+#new_survey{
 	position: fixed;
-	width: 50vw;
-  height: 70vh;
-  position: fixed;
-  left: 25vw;top: 15vh;
+	width: 70vw;
+  height: 96vh;
+  left: 15vw;top: 2vh;
 	align-items: center;
-
 }
-#message_card{
-	max-width: 650px;
+#create_survey_card{
+	max-width: 750px;
+	max-height: 850px;
+	height: 100% !important;
 	margin: auto;
-	margin-top:50px;
-
+	margin-top:0;
 }
 
 .login-img{
@@ -166,6 +158,16 @@ footer .container {
 
 }
 
-.post-text{
-	color:white;
+#wrap-button{
+	display: inline-flex;
+}
+
+#first-survey-btn{
+	margin-top:25px;
+}
+
+.survey-name{
+	color:#ffc107;
+	text-align: center;
+	font-size: 1.5rem !important;
 }

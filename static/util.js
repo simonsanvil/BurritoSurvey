@@ -1,27 +1,14 @@
-var activate_msg_elem = function(text,is_response){
+var activate_msg_elem = function(){
   // var user_name = "{{current_user.name}}";
-  $('#message_header').html(text);
-  if($('.new_post_container:visible').length){
-    $(".new_post_container").hide();
-    $("#create_post_icon").html("add");
-    $("#new_post_a").removeClass("yellow darken-3");
-    $("#new_post_a").css({"color":"red"});
+  if($('.new_survey_container:visible').length){
+    $(".new_survey_container").hide();
+    $("#create_survey_icon").html("poll");
+    $("#new_survey_a").removeClass("red");
+    $("#new_survey_a").addClass("blue darken-3");
   }else{
-    $(".new_post_container").show();
-    $("#create_post_icon").html("clear");
-    $("#new_post_a").addClass("yellow darken-3");
+    $(".new_survey_container").show();
+    $("#create_survey_icon").html("clear");
+    $("#new_survey_a").removeClass("blue darken-3");
+    $("#new_survey_a").addClass("red");
   };
-  if(is_response){
-    console.log("is response!!");
-    $("#message_card").css({"color":"blue"});
-    $("#message_card").removeClass("teal");
-    $("#message_card").addClass("blue");
-    $("#card_footer").removeClass("red");
-    $("#card_footer").addClass("yellow darken-3");
-  }else{
-    $("#message_card").removeClass("blue");
-    $("#message_card").addClass("teal");
-    $("#card_footer").removeClass("yellow darken-3");
-    $("#card_footer").addClass("red");
-  }
 };

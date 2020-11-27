@@ -20,14 +20,14 @@ def create_app(test_config=None):
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-    from WebApp import model
+    from . import model
     @login_manager.user_loader
     def load_user(user_id):
         return model.User.query.get(int(user_id))
 
     # Register blueprints:
-    from  WebApp import main
-    from  WebApp import auth
+    from . import main
+    from . import auth
 
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)

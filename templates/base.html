@@ -8,6 +8,8 @@
 			<link rel="stylesheet" href="{{ url_for('static', filename='microblogg.css') }}">
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<!-- FONTAWESOME -->
+			<script src="https://kit.fontawesome.com/bbde415407.js" crossorigin="anonymous"></script>
 		</head>
 		<body>
 				<header>
@@ -103,15 +105,14 @@
 			</script>
 			<script src="{{url_for('static', filename='util.js')}}"></script>
 			<script>
-			$(document).ready(function() {
-				$('textarea#post_text').characterCounter();
-			});
+			// $(document).ready(function() {
+			// 	$('textarea#post_text').characterCounter();
+			// });
 			</script>
 			<script>
 			window.onload = function(){
-			  $('#new_post_a').click(function(){activate_msg_elem("{{current_user.name}}"+" says...",false)});
-			  // $('#response_a').click(function(){set_header_text("responds...",true)});
-			  $('#cancel_msg_a').click(function(){activate_msg_elem("",false)});
+			  $('#new_survey_a').click(function(){activate_msg_elem()});
+			  $('#cancel_msg_a').click(function(){activate_msg_elem()});
 			};
 			</script>
 			{% block extra_js %}

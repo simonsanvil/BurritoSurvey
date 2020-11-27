@@ -1,0 +1,39 @@
+{% block content %}
+<!-- Jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- static/util.js -->
+<script src="{{url_for('static', filename='util.js')}}"></script>
+
+<div class="new_survey_container">
+  <div id="new_survey" class="center-align">
+    <form style="height:100%" action="{{ url_for('main.create_new_survey') }}" method="post">
+      <div class="col s12 m6" style="height:100%">
+        <div id="create_survey_card" class="card horizontal large teal">
+          <div class="card-content white-text"style="width:100%;height:100%">
+            <div class="input-field row" style="margin-top: 0;display:inline-flex;width:100%;height:100%">
+              <div class="col s9">
+                <i class="material-icons prefix">poll</i>
+                <input  id="survey_text" name="survey_text" placeholder="Survey Name" maxlength = "20" class="validate survey-text" required></input >
+              </div>
+              <div class="col s3">
+                <button id="wrap-button" type="submit" name="action" class="btn waves-effect yellow black-text valign-wrapper">
+                  <img  class="txt-icon" src="{{url_for('static', filename='burritoicon.svg')}}" style="width:20px;height:30px;">
+                  Wrap it Up!
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div  id="card_footer" class="card-action teal">
+            <a id="cancel_msg_a" href="#" class="white-text">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  {% endblock %}
+  </div>
+</div>
+
+{%if with_response%}
+ <script>activate_msg_elem("{{current_user.name}} responds...",true)</script>
+{%endif%}
