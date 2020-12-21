@@ -8,8 +8,13 @@ main {
 	flex: 1 0 auto;
 }
 
-footer .container {
-	margin-left: 5%;
+footer {
+	text-align:center;
+	color: rgb(41,44,47);
+	background: #ffc107;
+	margin-top: 20px;
+	padding-top: 15px;
+	padding-bottom:5px
 }
 
 .main_block {
@@ -115,7 +120,7 @@ footer .container {
 
 .new_survey_container{
 	/* blurry background effect*/
-	position: fixed;
+	position: absolute;
 	display:none;
 	width: 100%;
 	height: 100%;
@@ -125,19 +130,12 @@ footer .container {
 	z-index: 100;
 }
 
-#new_survey{
-	position: fixed;
-	width: 70vw;
-  height: 96vh;
-  left: 15vw;top: 2vh;
-	align-items: center;
-}
-#create_survey_card{
-	max-width: 750px;
-	max-height: 850px;
-	height: 100% !important;
-	margin: auto;
-	margin-top:0;
+#survey-creator-answers-container{
+	/* position: fixed; */
+	max-height: 60vh;
+	overflow-y: auto;
+	overflow-x: none;
+
 }
 
 .login-img{
@@ -170,4 +168,88 @@ footer .container {
 	color:#ffc107;
 	text-align: center;
 	font-size: 1.5rem !important;
+}
+
+.content-section {
+  background: #FFFFFF;
+  padding: 10px 20px;
+  border: 2px solid #dddddd;
+  padding-bottom: 2px;
+  margin: auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+  border-radius: 25px;
+  width:450px;
+}
+
+.btn-primary {
+  border-radius: 10px;
+}
+.form-control{
+  border-radius: 10px;
+}
+
+.btn-primary:hover {
+  color: #FFF;
+}
+
+.alert {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  margin-top: 25px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.alert-error {
+  border-color: darkred;
+  background-color: red;
+  color: white;
+}
+
+.alert-info {
+  border-color: orange;
+  background-color: yellow;
+  color: black;
+}
+
+.heading-icon {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 2px;
+  margin-right: 5px;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.heading-with-icon {
+  line-height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.question-header-link{
+	color: #363739;
+	filter: brightness(75%);
+	opacity: 0.90;
+	border-color: #363739;
+}
+.question-header-link i{
+	color: black;
+	text-decoration: none;
+}
+
+
+.card:hover {
+  /*transform: scale(1.05);*/
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card.hoverable {
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
 }

@@ -1,45 +1,61 @@
-<div class="collapsible-header hoverable card teal">
-  <div class="survey-content card-content">
-    <div class = "card-title">
-      <div class="metadata">
-        <span class="survey-header">
-          <a class="survey_title black-text"> <!--href="{{url_for('main.profile',user_id=survey.user.id)}}" -->
-            <i class="material-icons prefix txt-icon" style="margin:0;padding:0">poll</i>
-            <b class="icon-text">{{ survey.title }}</b>
-          </a>
-          <span class="date_created right" style="font-size: 1.4rem">
-            {%set day_suffix="st" if survey.time_created.day==1  else "th"%}
-            <p>Created on {{survey.time_created.strftime("%b %d"+day_suffix+", %Y")}}</p>
-          </span>
-        </span>
-        <div class="survey-info">
-          <div class="state-info right">
-            <p class="icon-text">
-              {%set status=(survey.state._value2member_map_[1]|string)[12:]|lower%}
-              {%if status=="new"%}
-                <i class="material-icons prefix left txt-icon" style="color:darkgray;">fiber_manual_record</i>
-                {%set status="unactive"%}
-              {%elif status=="closed"%}
-                <i class="material-icons prefix left txt-icon" style="color:crimson;">fiber_manual_record</i>
-              {%elif status=="online"%}
-                <i class="material-icons prefix left txt-icon" style="color:darkgreen;">fiber_manual_record</i>
-              {%endif%}
-              {{status}}
-            </p>
-          </div>
-          <div class="questions-info left">
-            <p class="icon-text">
-              <i class="material-icons prefix left txt-icon">question_answer</i>
-              {{survey.questions|length}} answers
-            </p>
-          </div>
+<div class="card hoverable" style="padding: 0px;border-radius: .3rem;">
+    <div class="header-card" style="margin: 0px;margin-top: 0px;padding: 0px;cursor: pointer;background: #20c997;border-radius: inherit;"
+        data-toggle="collapse" data-target="#survey{{loop.index}}-body" aria-expanded="false" aria-controls="survey{{loop.index}}-body">
+        <div style="margin: 15px;margin-top: 18px;padding: 8px;">
+            <div class="row" id="cardHeader">
+                <div class="col-xl-6">
+                    <h4 id="surveyTitle"><i class="fas fa-poll" style="margin-right: 10px;font-size: 32px;"></i>{{survey.title}}</h4>
+                </div>
+                <div class="col-xl-6">
+                    <p class="text-right" style="font-size: 20px;">Created on {{survey.time_created.strftime("%b %d"+", %Y")}}<br></p>
+                </div>
+            </div>
+            <div class="row align-middle" id="cardBrief">
+                <div class="col">
+                    <h5 style="line-height: 28px;margin: 0;padding: 0;">
+                      <i class="material-icons" style="margin-right: 5px;margin-top: 0px;display: inline-flex;vertical-align: top;padding: 0;">
+                        question_answer</i>
+                        {{survey.questions | length}} question(s)
+                    </h5>
+                </div>
+                <div class="col">
+                    <h6 class="text-monospace text-right mb-2" style="color: rgb(17,17,17);">
+                      {%set status=((survey.state|string)[12:]|lower)%}
+                      {%if status=="new"%}
+                        <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:darkgray;"></i>
+                        {%set status="new (unactive)"%}
+                        {%set opposite_status="online"%}
+                      {%elif status=="closed"%}
+                        <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:crimson;"></i>
+                        {%set opposite_status="online"%}
+                      {%else%}
+                        <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:darkgreen;"></i>
+                        {%set opposite_status="offline"%}
+                      {%endif%}
+                      {{status}}
+                    </h6>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="card-action survey-card-actions">
-      <!-- <a class="btn red hoverable" href="#">
-        <i class="material-icons">favorite</i>
-      </a> -->
+    <div id="survey{{loop.index}}-body" class="collapse" aria-labelledby="survey-body" style="background: #ffffff;">
+        <div id="card-body" class="card-body" style="background: #ffffff;border-color: rgb(255,255,255);padding: 0px;">
+            <div id="survey{{loop.index}}-info" style="margin: 10px;margin-top: 15px;">
+              <div class="row "style="margin-right: 0px;margin-left: 0px;padding: 2px;">
+                <h5><a href="/survey/{{survey.id}}">Reply url</a></h5>
+              </div>
+              <div class="row "style="margin-right: 0px;margin-left: 0px;padding: 2px;">
+                  <div class="col">
+                      <h5><a href="/change_survey_state/{{survey.id}}">Set to {{opposite_status}}</a></h5>
+                  </div>
+                  <div class="col offset-xl-6">
+                    <button class="btn btn-primary" style="float:right;padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);border-style: none;color: inherit;">
+                      <a href="/delete_survey/{{survey.id}}"><i class="material-icons" style="font-size: 22px; color:black">delete</i></a>
+                    </button>
+                  </div>
+              </div>
+
+            </div>
+        </div>
     </div>
-  </div>
 </div>

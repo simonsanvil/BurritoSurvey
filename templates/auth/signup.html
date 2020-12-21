@@ -1,29 +1,78 @@
 {% extends 'base.html' %}
-{% block content %}
-<div class="row parent-row">
-  <div class= "col s6">
-    <h2>Sign Up!!!</h2>
-    <form action="{{ url_for('auth.signup') }}" method="post">
-        <div><label>Email: <input type="email" name="email" required/></label></div>
-        <div><label>User name: <input type="text" name="username" required/></label></div>
-        <div><label>Password: <input type="password" name="password" required/></label></div>
-        <div><label>Repeat password: <input type="password" name="password_repeat" required/></label></div>
-        <div>
-          <button class="btn waves-effect waves-light" type="submit" name="action" value="Sign Up">Submit
-            <i class="material-icons right">send</i>
-          </button>
-        </div>
-    </form>
-    {% with messages = get_flashed_messages() %}
-        {% for message in messages %}
-            <div class="notif" style="color:red">{{ message }}</div>
-        {% endfor %}
-    {% endwith %}
-  </div>
-  <div class="col s4 offset-s2 valign-wrapper">
-    <img class="login-img" width="100%" height="100%" alt="signup image"
-    src="https://materializecss.com/images/sample-1.jpg">
-  </div>
+{% block  content %}
+<div class = "content-section">
+  <form method = "POST" action = "">
+    {{form.hidden_tag()}}
+    <fieldset class = "form-group mb-4">
+      <legend class = "mb-4 text-center"> Sign Up</legend>
+      <!-- <div class="form-group mb-4">
+        <label for="ejemplo_password_3" class="control-label">
+          {{form.username.label(class= "form-control-label")}}</label>
+          <input type="password" class="form-control" id="ejemplo_password_3"
+             placeholder="Contraseña">
+      </div> -->
+      <div class="form-group mb-4">
+          {{ form.username.label(class= "form-control-label")}}
+          {% if form.username.errors %}
+               {{ form.username(class = "form-control is-invalid") }}
+               <div class = "invalid-feedback">
+                 {% for error in form.username.errors %}
+                    <span> {{ error }} </span>
+                 {% endfor %}
+               </div>
+          {% else %}
+             {{ form.username(class= "form-control") }}
+          {% endif %}
+      </div>
+      <div class="form-group mb-4">
+          {{ form.email.label(class= "form-control-label")}}
+          {% if form.email.errors %}
+               {{ form.email(class = "form-control is-invalid") }}
+               <div class = "invalid-feedback">
+                 {% for error in form.email.errors %}
+                    <span> {{ error }} </span>
+                 {% endfor %}
+               </div>
+          {% else %}
+             {{ form.email(class= "form-control") }}
+          {% endif %}
+      </div>
+      <div class="form-group mb-4">
+          {{ form.password.label(class= "form-control-label")}}
+          {% if form.password.errors %}
+               {{ form.password(class = "form-control is-invalid") }}
+               <div class = "invalid-feedback">
+                 {% for error in form.password.errors %}
+                    <span> {{ error }} </span>
+                 {% endfor %}
+               </div>
+          {% else %}
+             {{ form.password(class= "form-control") }}
+          {% endif %}
+      </div>
+      <div class="form-group mb-3">
+            {{ form.password_confirm.label(class= "form-control-label")}}
+            {% if form.password_confirm.errors %}
+                 {{ form.password_confirm(class = "form-control is-invalid") }}
+                 <div class = "invalid-feedback">
+                   {% for error in form.password_confirm.errors %}
+                      <span> {{ error }} </span>
+                   {% endfor %}
+                 </div>
+            {% else %}
+               {{ form.password_confirm(class= "form-control") }}
+            {% endif %}
+      </div>
+      <div class="row justify-content-center">
+        {{ form.submit(class= "btn btn-primary") }}
+      </div>
+    </fieldset>
+    <div>
+      <small class = "text-muted">
+        Already have an account? <a class= "ml-2" href = "{{ url_for('auth.login') }}"> Log in</a>
+      </small>
+    </div>
+  </form>
 </div>
 
-{% endblock %}
+{% endblock  content %}

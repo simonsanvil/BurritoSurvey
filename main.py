@@ -1,7 +1,7 @@
 import datetime, os
 from dateutil import tz
 
-from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
+from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash, abort
 from flask_login  import current_user
 import flask_login
 from . import model
@@ -14,64 +14,130 @@ from datetime import datetime as dt
 
 bp = Blueprint("main", __name__)
 
+@bp.route("/online_surveys")
+def online_surveys():
+    surveys = model.Survey.query.filter_by(state = model.SurveyState.ONLINE).order_by(model.Survey.time_created.desc()).all()
+    return render_template("main/index.html",surveys=surveys)
+
 @bp.route("/")
 @flask_login.login_required
 def index():
     surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
-    other_surveys = model.Survey.query.filter_by(user_id=2).order_by(model.Survey.time_created.desc()).limit(3).all()
+    return render_template("main/index.html",surveys=surveys)
 
-    print([len(survey.questions) for survey in surveys])
-
-
-    return render_template("main/index.html",surveys=surveys,other_surveys=other_surveys)
-
-# model.Survey(user=user,title="My first Survey",state = SurveyState.NEW,time_created=datetime.datetime.now(tz.tzlocal()))
-
-# @bp.route("/post/<int:message_id>")
-# @bp.route('/post/<int:message_id>/<int:is_response>')
-# @flask_login.login_required
-# def post(message_id,is_response=0):
-#     message = model.Survey.query.filter_by(id=message_id).first_or_404()
-#     print(message)
-#     responses = model.Survey.query.filter(model.Survey.response_to is not None).all()#filter(model.Message.response_to==message_id).order_by(model.Message.timestamp.desc()).all()
-#     responses = [response for response in responses if response.response_to is not None]
-#     responses = [response for response in responses if response.response_to.id==message_id]
-#
-#     return render_template("main/post.html",posts=[message],with_response=bool(is_response),responses=responses)
+# @bp.route("/profile/<int:user_id>")
+@flask_login.login_required
+@bp.route("/account/<int:user_id>")
+def profile(user_id):
+    # user = model.User.query.filter_by(id=user_id).first_or_404()
+    # user_surveys = model.Survey.query.filter_by(user=user).order_by(model.Survey.time_created.desc()).all()
+    return redirect(url_for("auth.account"))#,responses=None)
 
 @bp.route("/new_survey",methods=["POST"])
 @flask_login.login_required
 def create_new_survey():
-    # post_text = request.form.get("post_text")
-    # response_to = request.form.get("response_to")
-    #
-    # if response_to is not None:
-    #     response_to = model.Message.query.filter_by(id=response_to).first_or_404()
-    #
-    # if len(post_text)>240:
-    #     flash("The text was too long!")
-    #     return redirect(url_for("main.index"))
-    # print(post_text)
-    # post_timestamp = dt.now(dateutil.tz.tzlocal())
-    # user = current_user
-    # msg = model.Message(
-    #     user=user,
-    #     text=post_text,
-    #     timestamp=post_timestamp,
-    #     response_to=response_to
-    # )
-    # print(msg.user.name)
-    # db.session.add(msg)
-    # db.session.commit()
-    return redirect(url_for("main.index"))#redirect(url_for("main.post",message_id=msg.id))
+    questionTypes = [
+        model.QuestionType.SELECT,
+        model.QuestionType.MULTISELECT,
+        model.QuestionType.TEXT,
+        model.QuestionType.NUMBER
+    ]
 
-#@bp.route("/profile/<int:user_id>")
-#@flask_login.login_required
-@bp.route("/profile/<int:user_id>")
-def profile(user_id):
-    user = model.User.query.filter_by(id=user_id).first_or_404()
-    user_surveys = model.Survey.query.filter_by(user=user).order_by(model.Survey.time_created.desc()).all()
-    return render_template("main/profile.html", user=user,surveys=user_surveys)#,responses=None)
+    json_data = request.get_json()
+    if json_data is not None:
+        survey_name = json_data['name']
+        timestamp = dt.now(tz.tzlocal())
+        state =  model.SurveyState.ONLINE
+        newSurvey = model.Survey(
+            user=current_user,
+            title = survey_name,
+            time_created = timestamp,
+            state = state
+        )
+        db.session.add(newSurvey)
+        db.session.flush()
+        survey_questions = json_data['questions']
+        questions = {}
+        for i,new_question in enumerate(survey_questions):
+            print(new_question)
+            question_type = int(new_question['type'])
+            question_title = new_question['title']
+            question = model.Question(
+                survey = newSurvey,
+                position = i,
+                type = questionTypes[question_type-1],
+                title = question_title
+            )
+            db.session.add(question)
+            db.session.flush()
+            print(question.id)
+            choices = []
+            for option in new_question['options']:
+                newChoice = model.Choice(
+                    question_id = question.id,
+                    number=int(option['number']),
+                    text=option['text']
+                    )
+                choices.append(newChoice)
+            db.session.add_all(choices)
+    db.session.commit()
+
+    return redirect(request.referrer)#url_for("main.index")
+
+
+@bp.route("/survey/<int:survey_uri>",methods=["GET"])
+@flask_login.login_required
+def survey(survey_uri):
+    survey = model.Survey.query.filter_by(id=survey_uri).first_or_404()
+    if survey.state == model.SurveyState.CLOSED:
+        print("Survey is closed at the moment.")
+        abort(403)
+
+    survey_questions = model.Question.query.filter_by(survey_id=survey.id).order_by(model.Question.position.desc()).all()
+    question_choices = []
+    for question in survey_questions:
+        choices = model.Choice.query.filter_by(question_id=question.id).all()
+        question_choices.append(choices)
+    print(survey_questions)
+    return render_template("main/fillsurvey.html",survey=survey,questions=survey_questions,choices=question_choices)
+
+@bp.route("/survey/<int:survey_uri>",methods=["POST"])
+@flask_login.login_required
+def survey_answer(survey_uri):
+    print(request.get_json())
+    return redirect(url_for("main.index"))
+
+
+@bp.route("/change_survey_state/<int:survey_id>",methods=["GET","POST"])
+@flask_login.login_required
+def change_survey_state(survey_id):
+    survey = model.Survey.query.filter_by(id=survey_id).first_or_404()
+    if survey.user_id != current_user.id:
+        print("This user cant change this survey")
+        abort(403)
+
+    print("Change state of survey with id:", survey.id)
+    if survey.state == model.SurveyState.CLOSED:
+        survey.state = model.SurveyState.ONLINE
+    else:
+        survey.state = model.SurveyState.CLOSED
+
+    db.session.commit()
+    return redirect(url_for("main.index"))
+
+@bp.route("/delete_survey/<int:survey_id>",methods=["GET","POST"])
+@flask_login.login_required
+def delete_survey(survey_id):
+    survey = model.Survey.query.filter_by(id=survey_id).first_or_404()
+    if survey.user_id != current_user.id:
+        print("This user cant change this survey");
+        abort(403)
+    print("delete survey with id:", survey.id)
+    # model.Survey.query.filter_by(id=survey_id).delete(survey_id)
+    db.session.delete(survey)
+    db.session.commit()
+    return redirect(url_for("main.index"))
+
 
 if __name__ == "__main__":
     from app import create_app
