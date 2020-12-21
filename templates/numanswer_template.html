@@ -21,9 +21,11 @@
         </i>
         {{question.title}}
       </a>
-
       <a
-        href="#"
+        href="#accordion-1 .item-{{loop.index}}"
+        data-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="accordion-1 .item-{{loop.index}}"
         style="float: right;color: black;">
         <i
           class="fas fa-chevron-down"
@@ -38,17 +40,20 @@
     role="tabpanel"
     data-parent="#accordion-1">
     <div class="card-body">
+      {%set choice = choices[questionIndex-1][0]%}
+      {%set numberTypes = ["ny","n integer"," positive"]%}
+      {%set numberType = numberTypes[choice.number-1]%}
       <div class="form-row">
         <div class="col-xl-7">
           <p
             id="max-chars-input-2"
             class="text-left"
             style="font-size: 16px;">
-            Introduce a positive number:
+            Introduce a{{numberType}} number:
           </p>
-
           <input
             class="form-control form-control"
+            name="numeric-input-{{questionIndex}}"
             type="number"
             style="height: 50%;margin-top: 5px;"
             oninput="verifyNumberInput($(this));"
@@ -58,11 +63,10 @@
             style="margin-top: 0px;">
             Invalid number
           </span>
-
           <span
             class="numbertype"
             style="display:none">
-            2
+            {{choice.number}}
           </span>
         </div>
       </div>

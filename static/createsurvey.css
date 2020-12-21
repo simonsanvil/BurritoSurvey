@@ -27,14 +27,25 @@ textarea {
   /* text-decoration: blink; */
 }
 
-i::before, i::before:hover {
+i, i:hover {
   text-decoration: none !important;
 }
 
-i[class^="icon-"]:before {
+i[class^="icon-"]::before{
   display: inline-block;
   text-decoration: none;
 }
+
+i[class^="icon-"]::after{
+  display: inline-block;
+  text-decoration: none;
+}
+
+i {
+  color:black;
+  text-decoration: none;
+}
+
 
 #survey-name-input{
   background: rgba(255,255,255,0);

@@ -12,5 +12,7 @@
   <div id="surveys "class="container surveys-container" style="margin: auto;margin-top: 25px;">
     {% include 'surveys_template.html' %}
   </div>
-{% include 'create_survey_template.html' %}
+{%if current_user.is_authenticated:%}
+  {% include 'create_survey_template.html' %}
+{%endif%}
 {% endblock %}

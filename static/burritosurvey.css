@@ -253,3 +253,53 @@ footer {
   transition: box-shadow .25s;
   transition: box-shadow .25s, -webkit-box-shadow .25s;
 }
+
+i[class^="icon-"]:before {
+  display: inline-block;
+  text-decoration: none;
+}
+
+#survey-name {
+  background: rgba(255,255,255,0);
+  color: #292c2f;
+  filter: brightness(131%);
+  border-style: none;
+  border-bottom-color: #f7e859;
+  border-radius: 0px;
+  font-size: 35px;
+  text-decoration: none;
+}
+
+.single-choice-radios input {
+  margin-top: 7px;
+}
+
+.single-choice-radios {
+  color: inherit;
+  font-size: 18px;
+}
+
+#survey-creator-answers-container {
+  margin-top: 25px;
+  margin-bottom: 5px;
+  padding: 3px;
+  opacity: 1;
+  border-width: 1px;
+  border-style: none;
+  max-height: 80vh;
+  min-height: 60vh;
+}
+
+.help-text {
+  font-size: 14px;
+  margin-top: 8px;
+  border-color: var(--dark);
+}
+
+.heading-icon.wrap-answers-icon {
+  width: 19px;
+  margin: 0px;
+  margin-left: 7px;
+  margin-top: 0px;
+  margin-bottom: 3px;
+}

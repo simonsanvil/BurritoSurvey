@@ -20,9 +20,12 @@ def online_surveys():
     return render_template("main/index.html",surveys=surveys)
 
 @bp.route("/")
-@flask_login.login_required
 def index():
-    surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
+    if current_user.is_authenticated:
+        surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
+    else:
+        surveys = model.Survey.query.filter_by(state=model.SurveyState.ONLINE).order_by(model.Survey.time_created.desc()).limit(10).all()
+
     return render_template("main/index.html",surveys=surveys)
 
 # @bp.route("/profile/<int:user_id>")
@@ -86,23 +89,21 @@ def create_new_survey():
 
 
 @bp.route("/survey/<int:survey_uri>",methods=["GET"])
-@flask_login.login_required
 def survey(survey_uri):
     survey = model.Survey.query.filter_by(id=survey_uri).first_or_404()
     if survey.state == model.SurveyState.CLOSED:
         print("Survey is closed at the moment.")
         abort(403)
 
-    survey_questions = model.Question.query.filter_by(survey_id=survey.id).order_by(model.Question.position.desc()).all()
+    survey_questions = model.Question.query.filter_by(survey_id=survey.id).order_by(model.Question.position.asc()).all()
     question_choices = []
     for question in survey_questions:
         choices = model.Choice.query.filter_by(question_id=question.id).all()
         question_choices.append(choices)
-    print(survey_questions)
+    print([[(survey_questions[i].type,choice.number) for choice in question_choices[i]] for i,_ in enumerate(question_choices)]  )
     return render_template("main/fillsurvey.html",survey=survey,questions=survey_questions,choices=question_choices)
 
 @bp.route("/survey/<int:survey_uri>",methods=["POST"])
-@flask_login.login_required
 def survey_answer(survey_uri):
     print(request.get_json())
     return redirect(url_for("main.index"))

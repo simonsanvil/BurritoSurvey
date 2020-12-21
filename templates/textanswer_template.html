@@ -16,12 +16,13 @@
         aria-controls="accordion-1 .item-{{loop.index}}"
         style="color: #363739;filter: brightness(75%);opacity: 0.90;border-color: #363739;">
         <i class="material-icons heading-icon">short_text</i>
-
         {{question.title}}
       </a>
-
       <a
-        href="#"
+        href="#accordion-1 .item-{{loop.index}}"
+        data-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="accordion-1 .item-{{loop.index}}"
         style="float: right;color: black;">
         <i
           class="fas fa-chevron-down"
@@ -36,6 +37,7 @@
     role="tabpanel"
     data-parent="#accordion-1">
     <div class="card-body">
+      {%set choice = choices[questionIndex-1][0]%}
       <div class="form-row">
         <div
           class="col-xl-8"
@@ -45,21 +47,18 @@
             class="form-control"
             placeholder="Add text here"
             style="width: 100%;font-size: 16px;"
-            maxlength="250"
-            onkeyup="checkTextAreaMax($(this)) ; SetNewSize(this);">
-          </textarea>
+            maxlength="{{choice.number}}"
+            onkeyup="checkTextAreaMax($(this)) ; SetNewSize(this);"></textarea>
         </div>
       </div>
-
       <p
         id="max-chars-input"
         style="font-size: 15px;margin: 5px;">
         Max # of characters allowed:
-
         <span
           class="textrange"
           style="margin-left: 1%;">
-          500
+          {{choice.number}}
         </span>
       </p>
     </div>

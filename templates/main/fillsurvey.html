@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-<script>
-  src="{{ url_for('static', filename='js/fillsurvey.js') }}"
-</script>
-
-
 {% block content %}
+  <link
+    href="{{ url_for('static', filename='createsurvey.css') }}"
+    rel="stylesheet">
+  </link>
+
+  <script src="{{ url_for('static', filename='js/fillsurvey.js') }}"></script> <!-- -->
   <div
     id="surveyFiller"
     class="card"
@@ -33,7 +34,6 @@
               style="font-size: 49px;margin-bottom: 2px;color: #17a2b8;">
               poll
             </i>
-
             <h1 id="survey-name">{{survey.title}}</h1>
           </div>
         </div>
@@ -49,12 +49,13 @@
               role="tablist">
               {% for question in questions %}
                 <!-- {{loop.index}}  -->
+                {%set questionIndex=loop.index%}
                 {%set questionType=((question.type|string)[13:]|lower)%}
                 {%if questionType=="select" %}
                   {% include "singlechoice_template.html"%}
-                {% elif questionType=="select" %}
+                {% elif questionType=="multiselect" %}
                   {%include 'multichoice_template.html'%}
-                {%elif questionType=="select"%}
+                {%elif questionType=="text"%}
                   {%include 'textanswer_template.html'%}
                 {%else%}
                   {%include 'numanswer_template.html'%}
@@ -82,10 +83,9 @@
               type="submit"
               style="background: #17a2b8;color: #292c2f;height: 43px;">
               Wrap your Answers!
-
-              <!-- <img
+              <img
                 class="heading-icon wrap-answers-icon"
-                src="static/burritoicon.svg"/> -->
+                src="{{url_for('static',filename='burritoicon.svg')}}"/>
             </button>
           </div>
         </div>

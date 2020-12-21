@@ -54,25 +54,16 @@
   background-color: rgb(0,123,255,0.3) !important;
 }
 
-textarea, input {
+/* textarea, input {
   outline: none;
 }
 
 textarea {
   resize: none !important;
   border: none;
-}
+} */
 
 .list-group-item.list-group-item-action textarea::placeholder {
   color: darkgrey;
   text-decoration: blink;
-}
-
-i::before, i::before:hover {
-  text-decoration: none !important;
-}
-
-i[class^="icon-"]:before {
-  display: inline-block;
-  text-decoration: none;
 }
