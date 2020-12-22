@@ -19,7 +19,7 @@
                     </h5>
                 </div>
                 <div class="col">
-                    {%if current_user.is_authenticated:%}
+                    {%if current_user.is_authenticated and (not online_surveys):%}
                       <h6 class="text-monospace text-right mb-2" style="color: rgb(17,17,17);">
                         {%set status=((survey.state|string)[12:]|lower)%}
                         {%if status=="new"%}
@@ -50,7 +50,7 @@
               <div class="surveyLink" style="margin-bottom: 5px;">
                 <h5 class="center-text"><a href="/survey/{{survey.id}}">Link to fill this survey</a></h5>
               </div>
-              {%if current_user.is_authenticated:%}
+              {%if current_user.is_authenticated and (not online_surveys):%}
                 <div class="row "style="margin-right: 0px;margin-left: 0px;padding: 2px;">
                     <div class="col-xl-8">
                         <h5 style="color:{{opposite_color}}; text-decoration:underline">

@@ -16,17 +16,17 @@ bp = Blueprint("main", __name__)
 
 @bp.route("/online_surveys")
 def online_surveys():
-    surveys = model.Survey.query.filter_by(state = model.SurveyState.ONLINE).order_by(model.Survey.time_created.desc()).all()
-    return render_template("main/index.html",surveys=surveys)
+    surveys = model.Survey.query.filter_by(state=model.SurveyState.ONLINE).order_by(model.Survey.time_created.desc()).all()
+    return render_template("main/index.html",surveys=surveys,online_surveys=True)
 
 @bp.route("/")
 def index():
     if current_user.is_authenticated:
         surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
+        return render_template("main/index.html",surveys=surveys,online_surveys=False)
     else:
         surveys = model.Survey.query.filter_by(state=model.SurveyState.ONLINE).order_by(model.Survey.time_created.desc()).limit(10).all()
-
-    return render_template("main/index.html",surveys=surveys,online_surveys=False)
+        return render_template("main/index.html",surveys=surveys,online_surveys=False)
 
 # @bp.route("/profile/<int:user_id>")
 @flask_login.login_required

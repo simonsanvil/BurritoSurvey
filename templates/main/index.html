@@ -2,7 +2,7 @@
 
 {% block content %}
   <div style="margin: auto;margin-top: 25px;">
-      {%if not current_user.is_authenticated:%}
+      {%if (not current_user.is_authenticated) or online_surveys:%}
       <h3 class="text-center">Available Surveys</h3>
       {% else %}
         <h3 class="text-center">Your Surveys:</h3>
