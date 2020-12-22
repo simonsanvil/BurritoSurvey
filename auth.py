@@ -75,6 +75,8 @@ def logout():
 
 def save_image(picture):
 
+    max_height, max_width = 128,128
+
     randomize = secrets.token_hex(8)
 
     name,picture_extension = os.path.splitext(picture.filename)
@@ -83,7 +85,10 @@ def save_image(picture):
 
     new_path = os.path.join(bp.root_path,"static","pics",new_name)
 
-    image_ = Image.open(picture)
+    img = Image.open(picture)
+
+    #resize image:
+    image_ = img.resize((max_height,max_width),Image.ANTIALIAS)
     image_.save(new_path)
 
     return new_name
