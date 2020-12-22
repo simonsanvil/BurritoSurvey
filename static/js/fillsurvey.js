@@ -77,7 +77,7 @@ function verifyNumberInput(numberInput){
     };
 };
 
-function OnWrapSurveyBtnClick(post_answer_url){
+function OnWrapAnswersBtnClick(post_answer_url){
     var newAnswers = getAnswers();
     var survey_id = parseInt($("#surveyFiller").attr("data-surveyid"));
     var new_answers_data = {"survey_id":survey_id, "answers":newAnswers}

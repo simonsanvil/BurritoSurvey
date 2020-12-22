@@ -24,10 +24,10 @@
       <form
         id="createSurveyForm"
         action="{{url_for('main.create_new_survey')}}"
-        role="form"
         method="post"
-        enctype="application/json"
-        onsubmit="return OnWrapSurveyBtnClick('{{url_for('main.create_new_survey')}}');">
+        onsubmit="return OnWrapSurveyBtnClick('{{url_for('main.create_new_survey')}}');"
+        role="form"
+        enctype="application/json">
         <div
           id="surveyCreatorBody"
           class="card-body"

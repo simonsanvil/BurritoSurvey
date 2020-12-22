@@ -20,7 +20,7 @@
         class="needs-validation"
         action="{{url_for('main.survey_answer', survey_uri=survey.id)}}"
         method="post"
-        onsubmit="return OnWrapSurveyBtnClick('{{url_for('main.survey_answer', survey_uri=survey.id)}}');"
+        onsubmit="return OnWrapAnswersBtnClick('{{url_for('main.survey_answer', survey_uri=survey.id)}}');"
         role="form"
         enctype="application/json">
         <div

@@ -26,7 +26,7 @@ def index():
     else:
         surveys = model.Survey.query.filter_by(state=model.SurveyState.ONLINE).order_by(model.Survey.time_created.desc()).limit(10).all()
 
-    return render_template("main/index.html",surveys=surveys)
+    return render_template("main/index.html",surveys=surveys,online_surveys=False)
 
 # @bp.route("/profile/<int:user_id>")
 @flask_login.login_required
@@ -103,9 +103,10 @@ def survey(survey_uri):
     print([[(survey_questions[i].type,choice.number) for choice in question_choices[i]] for i,_ in enumerate(question_choices)]  )
     return render_template("main/fillsurvey.html",survey=survey,questions=survey_questions,choices=question_choices)
 
-@bp.route("/survey/<int:survey_uri>",methods=["POST"])
+@bp.route("/survey_answer/<int:survey_uri>",methods=["POST"])
 def survey_answer(survey_uri):
-    print(request.get_json())
+    answers = request.get_json()
+    print(answers)
     return redirect(url_for("main.index"))
 
 
