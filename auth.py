@@ -11,9 +11,9 @@ from flask import Response
 
 
 #Import classes/functions from project modules:
-from .app import db, bcrypt
-from . import model
-from .forms import SignUp, LogIn,UpdateProfile
+from app import db, bcrypt
+import model
+from forms import SignUp, LogIn,UpdateProfile
 
 bp = Blueprint("auth", __name__)
 
@@ -88,7 +88,7 @@ def save_image(picture):
     img = Image.open(picture)
 
     #resize image:
-    image_ = img.resize((max_height,max_width),Image.ANTIALIAS)
+    image_ = img.resize((max_height,max_width))
     image_.save(new_path)
 
     return new_name
